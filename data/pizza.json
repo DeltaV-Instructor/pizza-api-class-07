@@ -1,0 +1,22 @@
+[
+  {
+    "pizzatype": "Calzone Pizza",
+    "location": "California",
+    "rating": "6"
+  },
+  {
+    "pizzatype": "Chicago Pizza",
+    "location": "Illinois",
+    "rating": "8"
+  },
+  {
+    "pizzatype": "Detroit Pizza",
+    "location": "Michigan",
+    "rating": "9"
+  },
+  {
+    "pizzatype": "New York Thin Crust",
+    "location": "New Jersey",
+    "rating": "7"
+  }
+]
