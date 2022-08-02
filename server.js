@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 'use strict';
 console.log('!!server.js connected.');
 
@@ -13,7 +15,9 @@ const express = require('express');
 require('dotenv').config();
 let data = require('./data/pizza.json');
 
-
+//now include cors to share resourses over the web. 
+const cors = require('cors');
+const { response } = require('express');
 
 // We must include cors if we want to share resources over the web
 
@@ -28,7 +32,7 @@ let data = require('./data/pizza.json');
 
 //2.
 const app = express();
-
+app.use(cors());
 
 // npm i dotenv - define our port, validate that my .env file is working.
 //if server runs on 3002, I know something is wrong with my env file.
@@ -61,23 +65,20 @@ app.get('/hello', (request, response) => {
 
 //add a pizza route
 app.get('/pizza', (request, response) => {
-  let pizzaType = request.query.pizzatype;
-  // http://localhost:3001/pizza?pizzatype=Chicago%20Pizza
-  //add data file and look at find(will find the first and returns only that match)
-  // let dataToSend = data.find(pizza => pizza.pizzatype === pizzaType);
-  let dataToInstant = data.find(pizza => pizza.pizzatype === pizzaType);
-  let dataToSend = new Pizza(dataToInstant);
-  response.send(dataToSend);
-  // now create a class below
-
-
-
-
-
-
-
-
-
+  try{
+    let pizzaType = request.query.pizzatype;
+    // http://localhost:3001/pizza?pizzatype=Chicago%20Pizza
+    //add data file and look at find(will find the first and returns only that match)
+    // let dataToSend = data.find(pizza => pizza.pizzatype === pizzaType);
+    let dataToInstant = data.find(pizza => pizza.pizzatype === pizzaType);
+    let dataToSend = new Pizza(dataToInstant);
+    response.send(dataToSend);
+    // now create a class below
+  } catch(error){
+    //create a new instance of error.
+    next(error);
+    // this will instantiate any new error
+  }
 });
 
 
@@ -113,7 +114,9 @@ class Pizza{
 
 //Errors
 
-
+app.use((error, request, response, next) => {
+  response.status(500).send(error.message);
+});
 
 
 
